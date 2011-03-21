@@ -13,6 +13,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:enabled="true" android:name="NetStatusBroadcastReceiver" android:label="NetStatusBroadcastReceiver" android:permission="android.permission.ACCESS_WIFI_STATE">
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE"></action>
+            </intent-filter>
+        </receiver>
 
     </application>
 </manifest>
