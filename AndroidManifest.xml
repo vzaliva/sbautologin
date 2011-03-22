@@ -15,9 +15,9 @@
         </activity>
         <receiver android:enabled="true" android:name="NetStatusBroadcastReceiver" android:label="NetStatusBroadcastReceiver" android:permission="android.permission.ACCESS_WIFI_STATE">
             <intent-filter>
-                <action android:name="android.net.wifi.STATE_CHANGE"></action>
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
             </intent-filter>
         </receiver>
-
+        <service android:name=".SbLoginService"/>
     </application>
 </manifest>
