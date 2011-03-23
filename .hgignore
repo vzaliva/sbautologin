@@ -1,0 +1,7 @@
+syntax: glob
+.idea/
+bin/*
+out/
+gen/
+.DS_Store
+*.iml
