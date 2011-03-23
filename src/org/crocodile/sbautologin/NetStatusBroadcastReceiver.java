@@ -9,6 +9,7 @@ import android.util.Log;
 public class NetStatusBroadcastReceiver extends BroadcastReceiver
 {
     private static final String TAG = "NetStatusBroadcastReceiver";
+    private static final String STARBUCKS_SSID = "attwifi";
 
     @Override
     public void onReceive(Context context, Intent intent)
@@ -30,7 +31,19 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
         if(!intent.hasExtra(WifiManager.EXTRA_BSSID))
             return;
         String bssid = (String) intent.getStringExtra(WifiManager.EXTRA_BSSID);
-        */ 
+        */
+        
+        if(STARBUCKS_SSID.equals(ssid))
+        {
+            Starbucks s = new Starbucks();
+            try
+            {
+                s.login();
+            } catch(Exception e)
+            {
+                Log.e(TAG,"Login failed",e);
+            }
+        }
     }
 
 }
