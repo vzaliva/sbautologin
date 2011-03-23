@@ -18,7 +18,7 @@ import android.util.Log;
 public class Starbucks
 {
     private static final String TEST_URL = "http://www.codeminders.com/sbautologin.html";
-    private static final String TAG = "Starbucks";
+    private static final String TAG = "SbAutoLoginStarbucks";
 
     public Starbucks()
     {
