@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class NetStatusBroadcastReceiver extends BroadcastReceiver
 {
-    private static final String TAG = "NetStatusBroadcastReceiver";
+    private static final String TAG = "SbAutoLoginBroadcastReceiver";
     private static final String STARBUCKS_SSID = "attwifi";
 
     @Override
