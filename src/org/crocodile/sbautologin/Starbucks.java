@@ -1,3 +1,5 @@
+package org.crocodile.sbautologin;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -181,6 +183,7 @@ public class Starbucks
  * 
  * @author michael
  */
+@SuppressWarnings("serial")
 class InvalidFormException extends Exception
 {
     public InvalidFormException(String message)
