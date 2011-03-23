@@ -1,53 +1,41 @@
 package org.crocodile.sbautologin;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.io.*;
+import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.util.Log;
+
 /**
  * Allows the user to accept the Starbucks Wi-Fi terms and conditions without
  * having to open a browser.
+ * 
+ * Based on source code from: 
+ *  http://mangstacular.blogspot.com/2010/10/starbucks-wi-fi.html
  * 
  * @author michael
  */
 public class Starbucks
 {
-    /**
-     * True if status messages should be printed to stdout.
-     */
-    private static boolean verbose = false;
+    private static final String TEST_URL = "http://www.google.com";
+    private static final String TAG = "Starbucks";
 
-    public static void main(String args[]) throws Exception
+    public Starbucks()
     {
-        // get arguments
-        if(args.length > 0)
-        {
-            verbose = args[0].equals("-v");
-            if(args[0].equals("--help"))
-            {
-                System.out.println("Starbucks Wi-Fi Terms and Conditions Accepter");
-                System.out
-                        .println("Starbucks provides free Wi-Fi access, but requires that you first accept their terms and conditions.\nThis program will accept those terms and conditions without you having to open a browser window and accept them yourself.");
-                System.out.println("by Michael Angstadt www.mangst.com");
-
-                System.out.println("\nParameters:");
-                System.out.println("-v\tVerbose output");
-                System.out.println("--help\tDisplays this help text");
-
-                System.out.println("\nExample: java Starbucks -v");
-                System.exit(0);
-            }
-        }
-
-        URL googleUrl = new URL("http://www.google.com");
+    }
+    
+    /**
+     * Attempts to log in to Starbucks WiFi.
+     * 
+     * @return true if login was performed. false it you were already logged in and no login is required.
+     * @throws Exception if login failed.
+     */
+    public boolean login() throws Exception
+    {
+        URL googleUrl = new URL(TEST_URL);
 
         // disable the automatic following of redirects
         // a 3xx response can be used to determine whether or not the computer
@@ -55,7 +43,7 @@ public class Starbucks
         HttpURLConnection.setFollowRedirects(false);
 
         // try to visit a website
-        print("Attempting to visit [" + googleUrl + "]...");
+        Log.d(TAG, "Attempting to visit [" + googleUrl + "]...");
         HttpURLConnection conn = (HttpURLConnection) googleUrl.openConnection();
         conn.setDoInput(true);
         conn.setDoOutput(false);
@@ -66,16 +54,13 @@ public class Starbucks
             // if you haven't accepted the terms and conditions yet, 302 is
             // returned, redirecting you to the login page
 
-            println("FAILED with " + responseCode); // it should fail to visit
-                                                    // the website
-
             // get the Location header, which contains the redirect URL
             String redirectUrlStr = conn.getHeaderField("Location");
 
             // go to the redirect URL, which is the Starbucks login page
             conn.disconnect();
             URL redirectUrl = new URL(redirectUrlStr);
-            print("Downloading Starbucks login page [" + redirectUrl + "]...");
+            Log.d(TAG, "Downloading Starbucks login page [" + redirectUrl + "]...");
             conn = (HttpURLConnection) redirectUrl.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(false);
@@ -92,15 +77,12 @@ public class Starbucks
             in.close();
             conn.disconnect();
 
-            println("SUCCESS");
-
             // parse the form info out of the HTML
-            print("Parsing Starbucks login page...");
+            Log.d(TAG, "Parsing Starbucks login page...");
             HtmlForm formInfo = new HtmlForm(redirectUrl, html.toString());
-            println("SUCCESS");
 
             // prepare to submit the form
-            print("Accepting the terms and conditions...");
+            Log.d(TAG, "Accepting the terms and conditions...");
             conn = (HttpURLConnection) formInfo.actionUrl.openConnection();
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -129,52 +111,24 @@ public class Starbucks
             responseCode = conn.getResponseCode();
             if(responseCode == HttpURLConnection.HTTP_OK)
             {
-                println("SUCCESS");
-                println("The terms and conditions have been agreed to and you can now connect to the Internet!");
+                Log.d(TAG, "SUCCESS: The terms and conditions have been agreed to and you can now connect to the Internet!");
+                return(true);
             } else
             {
-                println("FAILED");
-                System.err.println("Error: Approval of terms and conditions failed.");
-                System.exit(1);
+                Log.e(TAG, "Error: Approval of terms and conditions failed. HTTP status code "+responseCode);
+                throw new Exception("Error: Approval of terms and conditions failed. HTTP status code "+responseCode);
             }
         } else if(responseCode == HttpURLConnection.HTTP_OK)
         {
-            println("SUCCESS");
-            println("You are already connected to the Internet.");
+            Log.d(TAG, "You are already connected to the Internet.");
+            return(false);
         } else
         {
-            println("ERROR");
-            System.err.println("Unknown error: HTTP status code " + responseCode);
-            System.exit(1);
+            Log.e(TAG, "Unknown error: HTTP status code " + responseCode);
+            throw new Exception("Unknown error: HTTP status code " + responseCode);
         }
     }
 
-    /**
-     * Prints a message to stdout if verbose mode is enabled.
-     * 
-     * @param message the message to print
-     */
-    public static void print(String message)
-    {
-        if(verbose)
-        {
-            System.out.print(message);
-        }
-    }
-
-    /**
-     * Prints a message to stdout if verbose mode is enabled. A newline is added
-     * to the end of the message.
-     * 
-     * @param message the message to print
-     */
-    public static void println(String message)
-    {
-        if(verbose)
-        {
-            System.out.println(message);
-        }
-    }
 }
 
 /**
