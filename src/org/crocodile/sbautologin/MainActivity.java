@@ -13,7 +13,8 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateUtils;
-import android.view.Gravity;
+import android.view.*;
+import android.view.View.OnClickListener;
 import android.widget.*;
 
 public class MainActivity extends Activity
@@ -24,14 +25,16 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        ToggleButton activeChkBox = (ToggleButton) findViewById(R.id.active);
-
-        activeChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+        ToggleButton activeToggle = (ToggleButton) findViewById(R.id.active);
+        SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
+        activeToggle.setChecked(settings.getBoolean(Constants.PREF_KEY_ACTIVE, true))
+;
+        activeToggle.setOnClickListener(new OnClickListener() {
+            public void onClick(View buttonView)
             {
                 SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(Constants.PREF_KEY_ACTIVE, isChecked);
+                SharedPreferences.Editor editor = settings.edit();                
+                editor.putBoolean(Constants.PREF_KEY_ACTIVE, ((ToggleButton)buttonView).isChecked());
                 editor.commit();
             }
         });
