@@ -54,10 +54,10 @@ public class DBAccesser {
         return historyItem;
     }
 
-    public ArrayList<HistoryItem> getHistoryItems() {
+    public ArrayList<HistoryItem> getHistoryItems(int n) {
         ArrayList<HistoryItem> historyItems = new ArrayList<HistoryItem>();
         db = dbCreator.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from history;", null);
+        Cursor cursor = db.rawQuery("select * from history order by date desc limit "+n+";", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             historyItems.add(getHistoryItem(cursor.getInt(0)));
