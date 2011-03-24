@@ -133,4 +133,27 @@ public class DBAccesser
 
     }
 
+    public long getLastItemDate()
+    {
+        long date;
+        db = dbCreator.getReadableDatabase();
+        try
+        {
+            Cursor cursor = db.rawQuery("SELECT max(date) from history", null);
+            try
+            {
+                cursor.moveToFirst();
+                date = cursor.getLong(0);
+            } finally
+            {
+                cursor.close();
+            }
+        } finally
+        {
+            db.close();
+        }
+
+        return date;
+    }
+
 }
