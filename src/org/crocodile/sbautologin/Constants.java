@@ -10,4 +10,6 @@ public interface Constants
 
     final String STARBUCKS_SSID  = "attwifi";
 
+    final long REFRESH_INTERVAL_MS = 1000;
+
 }

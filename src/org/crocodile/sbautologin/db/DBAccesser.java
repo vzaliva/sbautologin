@@ -133,17 +133,22 @@ public class DBAccesser
 
     }
 
-    public long getLastItemDate()
+    public int getMaxId()
     {
-        long date;
         db = dbCreator.getReadableDatabase();
         try
         {
-            Cursor cursor = db.rawQuery("SELECT max(date) from history", null);
+            Cursor cursor = db.rawQuery("SELECT max(_id) from history", null);
             try
             {
-                cursor.moveToFirst();
-                date = cursor.getLong(0);
+                if(cursor.getCount() > 0)
+                {
+                    cursor.moveToFirst();
+                    return cursor.getInt(0);
+                } else
+                {
+                    return -1;
+                }
             } finally
             {
                 cursor.close();
@@ -152,8 +157,6 @@ public class DBAccesser
         {
             db.close();
         }
-
-        return date;
     }
 
 }
