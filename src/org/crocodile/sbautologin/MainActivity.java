@@ -10,6 +10,7 @@ import org.crocodile.sbautologin.model.HistoryItem;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -19,8 +20,9 @@ import android.widget.*;
 public class MainActivity extends Activity
 {
 
-    private static final String TAG = "SbAutoLoginMain";
-    static final String PREFS_NAME = "sbautologin";
+    private static final int    HIST_LEN   = 10;
+    private static final String TAG        = "SbAutoLoginMain";
+    static final String         PREFS_NAME = "sbautologin";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -47,41 +49,48 @@ public class MainActivity extends Activity
     private void showHistory()
     {
         DBAccesser db = new DBAccesser(this);
-        ArrayList<HistoryItem> hist = db.getHistoryItems(4);
-        int i=0;
+        ArrayList<HistoryItem> hist = db.getHistoryItems(HIST_LEN);
+
         TableLayout histtable = (TableLayout) findViewById(R.id.histTable);
-        histtable.setStretchAllColumns(true);  
-        histtable.setShrinkAllColumns(true);  
-        for(HistoryItem h:hist)
+        histtable.setStretchAllColumns(true);
+        histtable.setShrinkAllColumns(true);
+        histtable.removeAllViews();
+        if(hist.isEmpty())
         {
-            i++;
-            Log.d(TAG,"Read: "+h.getMessage());
-            TableRow row = new TableRow(this); 
-            row.setGravity(Gravity.CENTER_HORIZONTAL);  
+            TextView nohist = new TextView(this);
+            nohist.setText(R.string.nohist);
+            nohist.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+            histtable.addView(nohist);
+        } else
+        {
 
-            ImageView icon = new ImageView(this);
-            icon.setImageResource(h.isSuccess()?
-                    android.R.drawable.presence_online:
-                    android.R.drawable.presence_offline);
-            row.addView(icon);
+            int i = 0;
+            for(HistoryItem h : hist)
+            {
+                i++;
+                TableRow row = new TableRow(this);
+                row.setGravity(Gravity.CENTER_HORIZONTAL);
 
-            TextView dateCell = new TextView(this);            
-            CharSequence ds = DateUtils.formatSameDayTime(h.getDate().getTime(), 
-                    new Date().getTime(), 
-                    DateFormat.SHORT, 
-                    DateFormat.SHORT);
-            dateCell.setText(ds);
-            dateCell.setGravity(Gravity.LEFT);
-            row.addView(dateCell);
-            
-            
-            TextView msgCell = new TextView(this);
-            msgCell.setText(h.getMessage());
-            msgCell.setGravity(Gravity.LEFT);
-            row.addView(msgCell);
+                ImageView icon = new ImageView(this);
+                icon.setImageResource(h.isSuccess() ? android.R.drawable.presence_online
+                        : android.R.drawable.presence_offline);
+                row.addView(icon);
 
-            row.setGravity(Gravity.LEFT);
-            histtable.addView(row);
+                TextView dateCell = new TextView(this);
+                CharSequence ds = DateUtils.formatSameDayTime(h.getDate().getTime(), new Date().getTime(),
+                        DateFormat.SHORT, DateFormat.SHORT);
+                dateCell.setText(ds);
+                dateCell.setGravity(Gravity.LEFT);
+                row.addView(dateCell);
+
+                TextView msgCell = new TextView(this);
+                msgCell.setText(h.getMessage());
+                msgCell.setGravity(Gravity.LEFT);
+                row.addView(msgCell);
+
+                row.setGravity(Gravity.LEFT);
+                histtable.addView(row);
+            }
         }
     }
 
@@ -95,7 +104,6 @@ public class MainActivity extends Activity
             h.setDate(new Date());
             h.setSuccess(i % 2 == 0 ? true : false);
             h.setMessage("Attempt " + i);
-            Log.d(TAG,"Write: "+h.getMessage());
             db.addHistoryItem(h);
         }
     }
