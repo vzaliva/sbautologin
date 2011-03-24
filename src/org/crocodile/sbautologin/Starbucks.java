@@ -17,7 +17,7 @@ import android.util.Log;
  */
 public class Starbucks
 {
-    private static final String TEST_URL = "http://www.codeminders.com/sbautologin.html";
+    private static final String TEST_URL = "http://www.google.com/";
     private static final String TAG = "SbAutoLogin";
 
     public Starbucks()
@@ -32,7 +32,7 @@ public class Starbucks
      */
     public boolean login() throws Exception
     {
-        URL googleUrl = new URL(TEST_URL);
+        URL testURL = new URL(TEST_URL);
 
         // disable the automatic following of redirects
         // a 3xx response can be used to determine whether or not the computer
@@ -40,8 +40,8 @@ public class Starbucks
         HttpURLConnection.setFollowRedirects(false);
 
         // try to visit a website
-        Log.d(TAG, "Attempting to visit [" + googleUrl + "]...");
-        HttpURLConnection conn = (HttpURLConnection) googleUrl.openConnection();
+        Log.d(TAG, "Attempting to visit [" + testURL + "]...");
+        HttpURLConnection conn = (HttpURLConnection) testURL.openConnection();
         conn.setDoInput(true);
         conn.setDoOutput(false);
         conn.setRequestMethod("GET");
@@ -101,7 +101,7 @@ public class Starbucks
             conn.disconnect();
 
             // try to connect to the Internet again to see if it worked
-            conn = (HttpURLConnection) googleUrl.openConnection();
+            conn = (HttpURLConnection) testURL.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(false);
             conn.setRequestMethod("GET");
