@@ -18,10 +18,6 @@ import android.widget.*;
 
 public class MainActivity extends Activity
 {
-
-    private static final int    HIST_LEN   = 10;
-    static final String         PREFS_NAME = "sbautologin";
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -33,9 +29,9 @@ public class MainActivity extends Activity
         activeChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean("active", isChecked);
+                editor.putBoolean(Constants.PREF_KEY_ACTIVE, isChecked);
                 editor.commit();
             }
         });
@@ -47,7 +43,7 @@ public class MainActivity extends Activity
     private void showHistory()
     {
         DBAccesser db = new DBAccesser(this);
-        ArrayList<HistoryItem> hist = db.getHistoryItems(HIST_LEN);
+        ArrayList<HistoryItem> hist = db.getHistoryItems(Constants.HIST_LEN);
 
         TableLayout histtable = (TableLayout) findViewById(R.id.histTable);
         histtable.setStretchAllColumns(true);
