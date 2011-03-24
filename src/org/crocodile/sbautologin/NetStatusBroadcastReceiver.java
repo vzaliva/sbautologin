@@ -28,14 +28,7 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
             return;
         }
 
-        /*
-        if(!action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION))
-        {
-            Log.i(TAG,"Ignoring action "+action);
-            return;
-        }
-        */
-        
+      
         NetworkInfo ni = (NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
         if(ni==null || !ni.isConnected())
         {
