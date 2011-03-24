@@ -5,6 +5,9 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import org.crocodile.sbautologin.db.DBAccesser;
 import org.crocodile.sbautologin.model.HistoryItem;
 
@@ -18,10 +21,13 @@ import android.widget.*;
 
 public class MainActivity extends Activity
 {
+    private boolean update = true;
+
     @Override
-    public void onResume()
+    public void onCreate(Bundle savedInstanceState)
     {
-        super.onResume();
+        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main);
 
         ToggleButton activeToggle = (ToggleButton) findViewById(R.id.active);
@@ -31,15 +37,71 @@ public class MainActivity extends Activity
             public void onClick(View buttonView)
             {
                 SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
-                SharedPreferences.Editor editor = settings.edit();                
+                SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(Constants.PREF_KEY_ACTIVE, ((ToggleButton)buttonView).isChecked());
                 editor.commit();
             }
         });
-
-        //addTestData();
-        showHistory();
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        update = true;
+        startUpdateThread();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+
+        update = false;
+        synchronized (this)
+        {
+            notify();
+        }
+    }
+
+    public void startUpdateThread()
+    {
+        new Thread(new Runnable()
+        {
+            public void run()
+            {
+                DBAccesser db = new DBAccesser(MainActivity.this);
+                handler.sendEmptyMessage(0);
+                long date = db.getLastItemDate();
+                while (update) {
+                    if (date < db.getLastItemDate())
+                    {
+                        handler.sendEmptyMessage(0);
+                    }
+                    try
+                    {
+                        synchronized (this)
+                        {
+                            wait(1000);
+                        }
+                    } catch (InterruptedException e)
+                    {
+                        update = false;
+                    }
+                }
+            }
+        }).start();
+    }
+
+    public Handler handler = new Handler()
+    {
+        @Override
+        public void handleMessage(Message msg)
+        {
+            showHistory();
+        }
+    };
 
     private void showHistory()
     {
