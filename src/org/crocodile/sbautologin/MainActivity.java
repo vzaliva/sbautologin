@@ -36,7 +36,7 @@ public class MainActivity extends Activity
             }
         });
 
-        addTestData();
+        //addTestData();
         showHistory();
     }
 
