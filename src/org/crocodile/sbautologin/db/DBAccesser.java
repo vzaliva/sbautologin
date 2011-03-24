@@ -75,7 +75,7 @@ public class DBAccesser
     {
         HistoryItem historyItem = new HistoryItem();
         historyItem.setId(cursor.getInt(0));
-        historyItem.setDate(new Date(cursor.getInt(1)));
+        historyItem.setDate(new Date(cursor.getLong(1)));
         historyItem.setSuccess(cursor.getInt(2) != 0);
         historyItem.setMessage(cursor.getString(3));
         return historyItem;
