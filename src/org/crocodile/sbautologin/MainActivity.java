@@ -59,6 +59,12 @@ public class MainActivity extends Activity
             TableRow row = new TableRow(this); 
             row.setGravity(Gravity.CENTER_HORIZONTAL);  
 
+            ImageView icon = new ImageView(this);
+            icon.setImageResource(h.isSuccess()?
+                    android.R.drawable.presence_online:
+                    android.R.drawable.presence_offline);
+            row.addView(icon);
+
             TextView dateCell = new TextView(this);            
             CharSequence ds = DateUtils.formatSameDayTime(h.getDate().getTime(), 
                     new Date().getTime(), 
@@ -67,6 +73,7 @@ public class MainActivity extends Activity
             dateCell.setText(ds);
             dateCell.setGravity(Gravity.LEFT);
             row.addView(dateCell);
+            
             
             TextView msgCell = new TextView(this);
             msgCell.setText(h.getMessage());
