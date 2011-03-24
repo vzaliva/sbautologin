@@ -11,7 +11,6 @@ import org.crocodile.sbautologin.model.HistoryItem;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.*;
 import android.view.View.OnClickListener;
@@ -20,15 +19,14 @@ import android.widget.*;
 public class MainActivity extends Activity
 {
     @Override
-    public void onCreate(Bundle savedInstanceState)
+    public void onResume()
     {
-        super.onCreate(savedInstanceState);
+        super.onResume();
         setContentView(R.layout.main);
 
         ToggleButton activeToggle = (ToggleButton) findViewById(R.id.active);
         SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
-        activeToggle.setChecked(settings.getBoolean(Constants.PREF_KEY_ACTIVE, true))
-;
+        activeToggle.setChecked(settings.getBoolean(Constants.PREF_KEY_ACTIVE, true));
         activeToggle.setOnClickListener(new OnClickListener() {
             public void onClick(View buttonView)
             {
@@ -91,6 +89,7 @@ public class MainActivity extends Activity
         }
     }
 
+    @SuppressWarnings("unused")
     private void addTestData()
     {
         HistoryItem h = new HistoryItem();

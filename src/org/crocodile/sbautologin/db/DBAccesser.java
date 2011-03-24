@@ -47,6 +47,7 @@ public class DBAccesser
         }
     }
 
+    @SuppressWarnings("unused")
     private HistoryItem getHistoryItem(int id)
     {
         db = dbCreator.getReadableDatabase();
