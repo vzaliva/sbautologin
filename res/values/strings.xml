@@ -4,4 +4,5 @@
     <string name="app_name">sbautologin</string>
     <string name="title">Starbucks WiFi Auto Login</string>
     <string name="history">Recent history:</string>
+    <string name="nohist">No recent connection attemps.</string>
 </resources>
