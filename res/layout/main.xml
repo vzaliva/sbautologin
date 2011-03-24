@@ -4,7 +4,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <TextView android:text="@string/title" android:id="@+id/textView1" android:textSize="20px" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-    <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Active" android:id="@+id/active"></CheckBox>
+    <ToggleButton android:text="ToggleButton" android:id="@+id/active" android:layout_width="wrap_content" android:layout_height="wrap_content"></ToggleButton>
     <TextView android:text="@string/history" android:id="@+id/textView2" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
     <TableLayout android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/histTable">
     </TableLayout>

@@ -13,7 +13,6 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.*;
 
@@ -21,7 +20,6 @@ public class MainActivity extends Activity
 {
 
     private static final int    HIST_LEN   = 10;
-    private static final String TAG        = "SbAutoLoginMain";
     static final String         PREFS_NAME = "sbautologin";
 
     @Override
@@ -30,7 +28,7 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        CheckBox activeChkBox = (CheckBox) findViewById(R.id.active);
+        ToggleButton activeChkBox = (ToggleButton) findViewById(R.id.active);
 
         activeChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
