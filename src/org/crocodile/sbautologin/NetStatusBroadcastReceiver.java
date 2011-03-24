@@ -14,8 +14,7 @@ import org.crocodile.sbautologin.model.HistoryItem;
 public class NetStatusBroadcastReceiver extends BroadcastReceiver
 {
     private static final String TAG = "SbAutoLoginBroadcastReceiver";
-    private static final String STARBUCKS_SSID = "attwifi";
-
+    
     @Override
     public void onReceive(Context context, Intent intent)
     {
@@ -38,11 +37,10 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo winfo = wifi.getConnectionInfo();
         String ssid = winfo.getSSID();
-        Log.d(TAG,"SSID="+ssid);
-
         
-        if(STARBUCKS_SSID.equals(ssid))
+        if(Constants.STARBUCKS_SSID.equals(ssid))
         {
+            Log.d(TAG,"Starbucks SSDID detected. SSID="+ssid);
             Starbucks s = new Starbucks();
             HistoryItem h = new HistoryItem();
             h.setDate(new Date());
@@ -62,6 +60,9 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
             }
             DBAccesser db = new DBAccesser(context);
             db.addHistoryItem(h);
+        } else
+        {
+            Log.d(TAG, "Unknown SSID "+ssid);
         }
     }
 
