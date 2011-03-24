@@ -19,11 +19,18 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
     public void onReceive(Context context, Intent intent)
     {
         Log.d(TAG,"Broadcast received");
-        
+
         SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, 0);
         if(!settings.getBoolean(Constants.PREF_KEY_ACTIVE, true))
         {
             Log.i(TAG,"Disabled. Ignoring broadcast.");
+            return;
+        }
+
+        final String action = intent.getAction();
+        if(!action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION))
+        {
+            Log.i(TAG,"Ignoring action "+action);
             return;
         }
         
