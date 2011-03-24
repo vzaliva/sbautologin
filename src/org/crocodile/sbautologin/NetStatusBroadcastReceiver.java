@@ -13,12 +13,13 @@ import org.crocodile.sbautologin.model.HistoryItem;
 
 public class NetStatusBroadcastReceiver extends BroadcastReceiver
 {
-    private static final String TAG = "SbAutoLoginBroadcastReceiver";
+    private static final String TAG = "SbAutoLogin";
     
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        Log.d(TAG,"Broadcast received");
+        final String action = intent.getAction();
+        Log.d(TAG,"Broadcast received. Action="+action);
 
         SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, 0);
         if(!settings.getBoolean(Constants.PREF_KEY_ACTIVE, true))
@@ -27,15 +28,16 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
             return;
         }
 
-        final String action = intent.getAction();
+        /*
         if(!action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION))
         {
             Log.i(TAG,"Ignoring action "+action);
             return;
         }
+        */
         
         NetworkInfo ni = (NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-        if(!ni.isConnected())
+        if(ni==null || !ni.isConnected())
         {
             Log.d(TAG,"Not connected");
             return;

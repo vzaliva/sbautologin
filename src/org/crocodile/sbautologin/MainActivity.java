@@ -38,7 +38,7 @@ public class MainActivity extends Activity
             {
                 SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(Constants.PREF_KEY_ACTIVE, ((ToggleButton)buttonView).isChecked());
+                editor.putBoolean(Constants.PREF_KEY_ACTIVE, ((ToggleButton) buttonView).isChecked());
                 editor.commit();
             }
         });
@@ -58,50 +58,49 @@ public class MainActivity extends Activity
     {
         super.onPause();
 
-        update = false;
-        synchronized (this)
+        synchronized(this)
         {
+            update = false;
             notify();
         }
     }
 
     public void startUpdateThread()
     {
-        new Thread(new Runnable()
-        {
+        new Thread(new Runnable() {
             public void run()
             {
                 DBAccesser db = new DBAccesser(MainActivity.this);
                 handler.sendEmptyMessage(0);
-                long date = db.getLastItemDate();
-                while (update) {
-                    if (date < db.getLastItemDate())
-                    {
+                long maxId = db.getMaxId();
+                while(true)
+                {
+                    if(maxId > db.getMaxId())
                         handler.sendEmptyMessage(0);
-                    }
+
                     try
                     {
-                        synchronized (this)
+                        synchronized(this)
                         {
-                            wait(1000);
+                            wait(Constants.REFRESH_INTERVAL_MS);
+                            if(!update)
+                                break;
                         }
-                    } catch (InterruptedException e)
+                    } catch(InterruptedException e)
                     {
-                        update = false;
                     }
                 }
             }
         }).start();
     }
 
-    public Handler handler = new Handler()
-    {
-        @Override
-        public void handleMessage(Message msg)
-        {
-            showHistory();
-        }
-    };
+    public Handler handler = new Handler() {
+                               @Override
+                               public void handleMessage(Message msg)
+                               {
+                                   showHistory();
+                               }
+                           };
 
     private void showHistory()
     {
