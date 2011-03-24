@@ -3,4 +3,5 @@
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">sbautologin</string>
     <string name="title">Starbucks WiFi Auto Login</string>
+    <string name="history">Recent history:</string>
 </resources>
