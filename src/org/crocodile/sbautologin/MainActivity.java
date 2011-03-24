@@ -75,8 +75,12 @@ public class MainActivity extends Activity
                 long maxId = db.getMaxId();
                 while(true)
                 {
-                    if(maxId > db.getMaxId())
+                    int newMaxId = db.getMaxId();
+                    if(maxId < newMaxId)
+                    {
                         handler.sendEmptyMessage(0);
+                        maxId = newMaxId;
+                    }
 
                     try
                     {
