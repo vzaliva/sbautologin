@@ -171,7 +171,7 @@ public class MainActivity extends Activity
 
                 ImageView icon = new ImageView(this);
                 icon.setImageResource(h.isSuccess() ? android.R.drawable.presence_online
-                        : android.R.drawable.presence_offline);
+                        : android.R.drawable.presence_busy);
                 row.addView(icon);
 
                 TextView dateCell = new TextView(this);
