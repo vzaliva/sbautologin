@@ -147,7 +147,7 @@ public class DBAccesser
                     return cursor.getInt(0);
                 } else
                 {
-                    return -1;
+                    return 0;
                 }
             } finally
             {

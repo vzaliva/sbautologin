@@ -15,13 +15,49 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
 
 public class MainActivity extends Activity
 {
+    private static final String TAG = "SbAutoLogin";
     private boolean update = true;
+    private Object monitor = new Object();
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Handle item selection
+        switch(item.getItemId())
+        {
+        case R.id.clear_hist_menu_item:
+            clearHistory();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void clearHistory()
+    {
+        Log.d(TAG,"Clearing history");
+        DBAccesser db = new DBAccesser(MainActivity.this);
+        db.removeHistoryItems();
+        synchronized(monitor)
+        {
+            monitor.notify();
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -42,6 +78,8 @@ public class MainActivity extends Activity
                 editor.commit();
             }
         });
+        
+        //addTestData();
     }
 
     @Override
@@ -58,10 +96,10 @@ public class MainActivity extends Activity
     {
         super.onPause();
 
-        synchronized(this)
+        synchronized(monitor)
         {
             update = false;
-            notify();
+            monitor.notify();
         }
     }
 
@@ -76,7 +114,7 @@ public class MainActivity extends Activity
                 while(true)
                 {
                     int newMaxId = db.getMaxId();
-                    if(maxId < newMaxId)
+                    if(maxId < newMaxId || newMaxId==0)
                     {
                         handler.sendEmptyMessage(0);
                         maxId = newMaxId;
@@ -84,9 +122,9 @@ public class MainActivity extends Activity
 
                     try
                     {
-                        synchronized(this)
+                        synchronized(monitor)
                         {
-                            wait(Constants.REFRESH_INTERVAL_MS);
+                            monitor.wait(Constants.REFRESH_INTERVAL_MS);
                             if(!update)
                                 break;
                         }
