@@ -5,4 +5,5 @@
     <string name="title">Starbucks WiFi Auto Login</string>
     <string name="history">Recent history:</string>
     <string name="nohist">No recent connection attemps.</string>
+    <string name="clear_history">Clear History</string>
 </resources>
