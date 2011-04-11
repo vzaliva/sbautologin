@@ -3,5 +3,6 @@ syntax: glob
 bin/*
 out/
 gen/
+lib/
 .DS_Store
 *.iml
