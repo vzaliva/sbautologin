@@ -201,7 +201,7 @@ public class MainActivity extends Activity
         for(int i = 0; i < 2; i++)
         {
             h.setDate(new Date());
-            h.setSuccess(i % 2 == 0 ? true : false);
+            h.setSuccess(i % 2 == 0);
             h.setMessage("Attempt " + i);
             db.addHistoryItem(h);
         }
