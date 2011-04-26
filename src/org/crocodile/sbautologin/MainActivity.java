@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.*;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class MainActivity extends Activity
 {
@@ -79,7 +80,7 @@ public class MainActivity extends Activity
             }
         });
         
-        //addTestData();
+       // addTestData();
     }
 
     @Override
@@ -166,27 +167,39 @@ public class MainActivity extends Activity
             for(HistoryItem h : hist)
             {
                 i++;
-                TableRow row = new TableRow(this);
-                row.setGravity(Gravity.CENTER_HORIZONTAL);
+                RelativeLayout row = new RelativeLayout(this);
+                row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 
                 ImageView icon = new ImageView(this);
                 icon.setImageResource(h.isSuccess() ? android.R.drawable.presence_online
                         : android.R.drawable.presence_busy);
+                LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                icon.setLayoutParams(params);
+                icon.setId(1019 + i * 3);
                 row.addView(icon);
 
                 TextView dateCell = new TextView(this);
                 CharSequence ds = DateUtils.formatSameDayTime(h.getDate().getTime(), new Date().getTime(),
                         DateFormat.SHORT, DateFormat.SHORT);
                 dateCell.setText(ds);
-                dateCell.setGravity(Gravity.LEFT);
+                params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.RIGHT_OF, 1019 + i * 3);
+                dateCell.setLayoutParams(params);
+                dateCell.setId(1020 + i * 3);
                 row.addView(dateCell);
 
                 TextView msgCell = new TextView(this);
                 msgCell.setText(h.getMessage());
-                msgCell.setGravity(Gravity.LEFT);
+                params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.RIGHT_OF, 1020 + i * 3);
+                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                msgCell.setLayoutParams(params);
+                msgCell.setPadding(10, 0, 0, 0);
                 row.addView(msgCell);
 
-                row.setGravity(Gravity.LEFT);
                 histtable.addView(row);
             }
         }
@@ -198,11 +211,12 @@ public class MainActivity extends Activity
         HistoryItem h = new HistoryItem();
 
         DBAccesser db = new DBAccesser(this);
+        db.removeHistoryItems();
         for(int i = 0; i < 2; i++)
         {
             h.setDate(new Date());
             h.setSuccess(i % 2 == 0);
-            h.setMessage("Attempt " + i);
+            h.setMessage("Attempt longgggg ggggggggggg gggggggggggggggggggggggg gggggggggggggggggggggggggggggggggg" + i);
             db.addHistoryItem(h);
         }
     }
