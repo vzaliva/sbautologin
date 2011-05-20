@@ -50,12 +50,16 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
             {
                 boolean status = s.login();
                 h.setSuccess(true);
-                if(status)
+                if(status) {
                     h.setMessage("Logged in");
-                else
+                    //TODO notify success
+                } else {
                     h.setMessage("Already logged in");
+                    //TODO notify already logged in
+                }
             } catch(Exception e)
             {
+                //TODO notify error
                 Log.e(TAG,"Login failed",e);
                 h.setSuccess(false);
                 h.setMessage("Login failed: "+e.getMessage());
