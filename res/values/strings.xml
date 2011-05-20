@@ -6,4 +6,11 @@
     <string name="history">Recent history:</string>
     <string name="nohist">No recent connection attemps.</string>
     <string name="clear_history">Clear History</string>
+    <string name="settings">Settings</string>
+    <string name="notify_prefs_title">Notify me when:</string>
+    <string name="notify_prefs_success">Successfully logged in</string>
+    <string name="notify_prefs_error">Error occurred</string>
+    <string name="notify_prefs_already_logged">Already logged in</string>
+    <string name="save">Save</string>
+    <string name="conf_save">Configuration saved</string>
 </resources>
