@@ -13,4 +13,8 @@
     <string name="notify_prefs_already_logged">Already logged in</string>
     <string name="save">Save</string>
     <string name="conf_save">Configuration saved</string>
+    <string name="notify_title">sbautologin</string>
+    <string name="notify_message_success">Successfully logged in</string>
+    <string name="notify_message_error">Error occurred</string>
+    <string name="notify_message_already_logged">Already logged in</string>
 </resources>
