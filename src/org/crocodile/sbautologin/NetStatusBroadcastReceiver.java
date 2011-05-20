@@ -2,6 +2,9 @@ package org.crocodile.sbautologin;
 
 import java.util.Date;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.*;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -14,10 +17,13 @@ import org.crocodile.sbautologin.model.HistoryItem;
 public class NetStatusBroadcastReceiver extends BroadcastReceiver
 {
     private static final String TAG = "SbAutoLogin";
+    private Context context;
     
     @Override
     public void onReceive(Context context, Intent intent)
     {
+        this.context = context;
+
         final String action = intent.getAction();
         Log.d(TAG,"Broadcast received. Action="+action);
 
@@ -42,6 +48,7 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
         
         if(Constants.STARBUCKS_SSID.equals(ssid))
         {
+            SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
             Log.d(TAG,"Starbucks SSDID detected. SSID="+ssid);
             Starbucks s = new Starbucks();
             HistoryItem h = new HistoryItem();
@@ -51,15 +58,21 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
                 boolean status = s.login();
                 h.setSuccess(true);
                 if(status) {
+                    if (prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_SUCCESS, true)) {
+                        createNotification(context.getString(R.string.notify_message_success));
+                    }
                     h.setMessage("Logged in");
-                    //TODO notify success
                 } else {
+                    if (prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ALREADY_LOGGED_IN, false)) {
+                        createNotification(context.getString(R.string.notify_message_already_logged));
+                    }
                     h.setMessage("Already logged in");
-                    //TODO notify already logged in
                 }
             } catch(Exception e)
             {
-                //TODO notify error
+                if (prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ERROR, true)) {
+                    createNotification(context.getString(R.string.notify_message_error));
+                }
                 Log.e(TAG,"Login failed",e);
                 h.setSuccess(false);
                 h.setMessage("Login failed: "+e.getMessage());
@@ -70,6 +83,15 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
         {
             Log.d(TAG, "Unknown SSID "+ssid);
         }
+    }
+
+    private void createNotification(String message) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(R.drawable.icon, context.getString(R.string.notify_title), System.currentTimeMillis());
+        Intent notificationIntent = new Intent(context, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        notification.setLatestEventInfo(context, context.getString(R.string.notify_title), message, contentIntent);
+        notificationManager.notify(0, notification);
     }
 
 }
