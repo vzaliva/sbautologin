@@ -18,7 +18,7 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
 {
     private static final String TAG = "SbAutoLogin";
     private Context context;
-    
+
     @Override
     public void onReceive(Context context, Intent intent)
     {
@@ -34,18 +34,18 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
             return;
         }
 
-      
+
         NetworkInfo ni = (NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
         if(ni==null || !ni.isConnected())
         {
             Log.d(TAG,"Not connected");
             return;
         }
-        
+
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo winfo = wifi.getConnectionInfo();
         String ssid = winfo.getSSID();
-        
+
         if(Constants.STARBUCKS_SSID.equals(ssid))
         {
             SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
@@ -91,6 +91,7 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
         Intent notificationIntent = new Intent(context, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         notification.setLatestEventInfo(context, context.getString(R.string.notify_title), message, contentIntent);
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(0, notification);
     }
 
