@@ -25,9 +25,9 @@ public class DBAccesser
 
     public void addHistoryItem(HistoryItem historyItem)
     {
-        db = dbCreator.getWritableDatabase();
         try
         {
+            db = dbCreator.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("date", historyItem.getDate().getTime());
             contentValues.put("success", historyItem.isSuccess() ? 1 : 0);
@@ -50,9 +50,9 @@ public class DBAccesser
     @SuppressWarnings("unused")
     private HistoryItem getHistoryItem(int id)
     {
-        db = dbCreator.getReadableDatabase();
         try
         {
+            db = dbCreator.getReadableDatabase();
             Cursor cursor = db.rawQuery("select * from history where _id = " + id, null);
             try
             {
@@ -85,9 +85,9 @@ public class DBAccesser
     public ArrayList<HistoryItem> getHistoryItems(int n)
     {
         ArrayList<HistoryItem> historyItems = new ArrayList<HistoryItem>();
-        db = dbCreator.getReadableDatabase();
         try
         {
+            db = dbCreator.getReadableDatabase();
             Cursor cursor = db.rawQuery("select * from history order by date desc limit " + n + ";", null);
             try
             {
@@ -110,9 +110,9 @@ public class DBAccesser
 
     public void removeHistoryItem(int id)
     {
-        db = dbCreator.getWritableDatabase();
         try
         {
+            db = dbCreator.getWritableDatabase();
             db.delete("history", "_id = " + id, null);
         } finally
         {
@@ -122,9 +122,9 @@ public class DBAccesser
 
     public void removeHistoryItems()
     {
-        db = dbCreator.getWritableDatabase();
         try
         {
+            db = dbCreator.getWritableDatabase();
             db.delete("history", null, null);
         } finally
         {
@@ -135,9 +135,9 @@ public class DBAccesser
 
     public int getMaxId()
     {
-        db = dbCreator.getReadableDatabase();
         try
         {
+            db = dbCreator.getReadableDatabase();
             Cursor cursor = db.rawQuery("SELECT max(_id) from history", null);
             try
             {
