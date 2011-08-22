@@ -38,6 +38,8 @@ public class DBCreator extends SQLiteOpenHelper
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
     {
+        sqLiteDatabase.execSQL("drop table if exists history");
+        onCreate(sqLiteDatabase);
     }
 
     public synchronized SQLiteDatabase getWritableDatabase()
