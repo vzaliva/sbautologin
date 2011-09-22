@@ -27,6 +27,7 @@ public class MainActivity extends Activity
     private static final String TAG = "SbAutoLogin";
     private boolean update = true;
     private Object monitor = new Object();
+    private boolean needRetry = false;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -123,6 +124,9 @@ public class MainActivity extends Activity
                     {
                         handler.sendEmptyMessage(0);
                         maxId = newMaxId;
+                    } else if (needRetry) {
+                        needRetry = false;
+                        handler.sendEmptyMessage(0);
                     }
 
                     try
@@ -152,7 +156,13 @@ public class MainActivity extends Activity
     private void showHistory()
     {
         DBAccesser db = new DBAccesser(this);
-        ArrayList<HistoryItem> hist = db.getHistoryItems(Constants.HIST_LEN);
+        ArrayList<HistoryItem> hist;
+        try {
+            hist = db.getHistoryItems(Constants.HIST_LEN);
+        } catch (Exception e) {
+            needRetry = true;
+            return;
+        }
 
         TableLayout histtable = (TableLayout) findViewById(R.id.histTable);
         histtable.setStretchAllColumns(true);
