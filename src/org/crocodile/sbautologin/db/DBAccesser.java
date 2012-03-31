@@ -35,7 +35,8 @@ public class DBAccesser
             db.insert("history", null, contentValues);
         } finally
         {
-            db.close();
+            if(db != null)
+                db.close();
         }
     }
 
@@ -68,7 +69,8 @@ public class DBAccesser
             }
         } finally
         {
-            db.close();
+            if(db != null)
+                db.close();
         }
     }
 
@@ -104,7 +106,8 @@ public class DBAccesser
             }
         } finally
         {
-            db.close();
+            if(db != null)
+                db.close();
         }
     }
 
@@ -128,7 +131,8 @@ public class DBAccesser
             db.delete("history", null, null);
         } finally
         {
-            db.close();
+            if(db != null)
+                db.close();
         }
 
     }
