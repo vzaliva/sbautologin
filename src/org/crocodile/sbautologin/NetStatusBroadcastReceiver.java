@@ -55,7 +55,7 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
             h.setDate(new Date());
             try
             {
-                boolean status = s.login();
+                boolean status = s.login(settings.getString(Constants.PREF_KEY_URL, context.getString(R.string.defaulturl)));
                 h.setSuccess(true);
                 if(status) {
                     if (prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_SUCCESS, true)) {

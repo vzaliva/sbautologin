@@ -29,10 +29,30 @@
               android:layout_height="wrap_content"
               android:checked="false"
               android:textSize="20sp"/>
-    <Button android:id="@+id/prefs_save"
-            android:text="@string/save"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/urllabel"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/prefs_url"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textUri"
+        android:text="@string/defaulturl" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/prefs_save"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:textSize="20sp" />
+
 </LinearLayout>

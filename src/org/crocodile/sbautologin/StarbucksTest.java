@@ -11,7 +11,7 @@ public class StarbucksTest
     public void testLogin() throws Exception
     {
         Starbucks s = new Starbucks();
-        boolean res = s.login();
+        boolean res = s.login("http://google.com/");
         assertTrue(res);
     }
 
