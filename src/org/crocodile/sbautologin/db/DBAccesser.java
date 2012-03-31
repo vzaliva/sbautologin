@@ -155,7 +155,8 @@ public class DBAccesser
             }
         } finally
         {
-            db.close();
+            if(db != null)
+                db.close();
         }
     }
 
