@@ -17,7 +17,6 @@ import android.util.Log;
  */
 public class Starbucks
 {
-    private static final String TEST_URL = "http://www.google.com/";
     private static final String TAG = "SbAutoLogin";
 
     public Starbucks()
@@ -30,9 +29,9 @@ public class Starbucks
      * @return true if login was performed. false it you were already logged in and no login is required.
      * @throws Exception if login failed.
      */
-    public boolean login() throws Exception
+    public boolean login(String test_url) throws Exception
     {
-        URL testURL = new URL(TEST_URL);
+        URL testURL = new URL(test_url);
 
         // disable the automatic following of redirects
         // a 3xx response can be used to determine whether or not the computer

@@ -17,4 +17,6 @@
     <string name="notify_message_success">Successfully logged in</string>
     <string name="notify_message_error">Login failed</string>
     <string name="notify_message_already_logged">Already logged in</string>
+    <string name="urllabel">URL to check</string>
+    <string name="defaulturl">http://google.com/</string>
 </resources>
