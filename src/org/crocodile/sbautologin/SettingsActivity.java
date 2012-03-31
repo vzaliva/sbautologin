@@ -1,9 +1,12 @@
 
 package org.crocodile.sbautologin;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.app.AlertDialog;
+import android.content.*;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -31,16 +34,44 @@ public class SettingsActivity extends Activity
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view)
             {
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean(Constants.PREF_KEY_NOTIFY_WHEN_SUCCESS, successChbx.isChecked());
-                editor.putBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ERROR, errorChbx.isChecked());
-                editor.putBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ALREADY_LOGGED_IN, loggedinChbx.isChecked());
-                editor.putString(Constants.PREF_KEY_URL, urlField.getText().toString());
-                editor.commit();
-                Toast.makeText(getApplicationContext(), R.string.conf_save, Toast.LENGTH_SHORT).show();
-                finish();
+                String url = urlField.getText().toString();
+                if(!checkURL(url))
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                    builder.setMessage("Invalid URL").setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                } else
+                {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(Constants.PREF_KEY_NOTIFY_WHEN_SUCCESS, successChbx.isChecked());
+                    editor.putBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ERROR, errorChbx.isChecked());
+                    editor.putBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ALREADY_LOGGED_IN, loggedinChbx.isChecked());
+                    editor.putString(Constants.PREF_KEY_URL, url);
+                    editor.commit();
+                    Toast.makeText(getApplicationContext(), R.string.conf_save, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
+    }
+
+    private boolean checkURL(String s)
+    {
+        try
+        {
+            new URL(s);
+            return true;
+        } catch(MalformedURLException mex)
+        {
+            return false;
+        }
     }
 
     @Override

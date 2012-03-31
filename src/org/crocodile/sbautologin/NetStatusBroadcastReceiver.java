@@ -1,5 +1,8 @@
+
 package org.crocodile.sbautologin;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 
 import android.app.Notification;
@@ -17,7 +20,7 @@ import org.crocodile.sbautologin.model.HistoryItem;
 public class NetStatusBroadcastReceiver extends BroadcastReceiver
 {
     private static final String TAG = "SbAutoLogin";
-    private Context context;
+    private Context             context;
 
     @Override
     public void onReceive(Context context, Intent intent)
@@ -25,71 +28,96 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
         this.context = context;
 
         final String action = intent.getAction();
-        Log.d(TAG,"Broadcast received. Action="+action);
+        Log.d(TAG, "Broadcast received. Action=" + action);
 
         SharedPreferences settings = context.getSharedPreferences(Constants.PREFS_NAME, 0);
         if(!settings.getBoolean(Constants.PREF_KEY_ACTIVE, true))
         {
-            Log.i(TAG,"Disabled. Ignoring broadcast.");
+            Log.i(TAG, "Disabled. Ignoring broadcast.");
             return;
         }
 
-
-        NetworkInfo ni = (NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
-        if(ni==null || !ni.isConnected())
+        NetworkInfo ni = (NetworkInfo) intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+        if(ni == null || !ni.isConnected())
         {
-            Log.d(TAG,"Not connected");
+            Log.d(TAG, "Not connected");
             return;
         }
 
-        WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo winfo = wifi.getConnectionInfo();
         String ssid = winfo.getSSID();
 
         if(Constants.STARBUCKS_SSID.equals(ssid))
         {
             SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
-            Log.d(TAG,"Starbucks SSDID detected. SSID="+ssid);
+            Log.d(TAG, "Starbucks SSDID detected. SSID=" + ssid);
             Starbucks s = new Starbucks();
             HistoryItem h = new HistoryItem();
             h.setDate(new Date());
             try
             {
-                boolean status = s.login(settings.getString(Constants.PREF_KEY_URL, context.getString(R.string.defaulturl)));
+                boolean status = s.login(getTestURL(context, settings));
                 h.setSuccess(true);
-                if(status) {
-                    if (prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_SUCCESS, true)) {
+                if(status)
+                {
+                    if(prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_SUCCESS, true))
+                    {
                         createNotification(context.getString(R.string.notify_message_success));
                     }
                     h.setMessage("Logged in");
-                } else {
-                    if (prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ALREADY_LOGGED_IN, false)) {
+                } else
+                {
+                    if(prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ALREADY_LOGGED_IN, false))
+                    {
                         createNotification(context.getString(R.string.notify_message_already_logged));
                     }
                     h.setMessage("Already logged in");
                 }
             } catch(Exception e)
             {
-                if (prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ERROR, true)) {
+                if(prefs.getBoolean(Constants.PREF_KEY_NOTIFY_WHEN_ERROR, true))
+                {
                     createNotification(context.getString(R.string.notify_message_error));
                 }
-                Log.e(TAG,"Login failed",e);
+                Log.e(TAG, "Login failed", e);
                 h.setSuccess(false);
-                h.setMessage("Login failed: "+e.getMessage());
+                h.setMessage("Login failed: " + e.getMessage());
             }
             DBAccesser db = new DBAccesser(context);
             db.addHistoryItem(h);
         } else
         {
-            Log.d(TAG, "Unknown SSID "+ssid);
+            Log.d(TAG, "Unknown SSID " + ssid);
         }
     }
 
-    private void createNotification(String message) {
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(R.drawable.icon, context.getString(R.string.notify_title), System.currentTimeMillis());
+    private String getTestURL(Context context, SharedPreferences settings)
+    {
+        String default_url = context.getString(R.string.defaulturl);
+        String s = settings.getString(Constants.PREF_KEY_URL, default_url);
+        if(s == null || s.equals(default_url))
+            return s;
+        s = s.trim();
+        try
+        {
+            new URL(s);
+            return s;
+        } catch(MalformedURLException mex)
+        {
+            return default_url;
+        }
+    }
+
+    private void createNotification(String message)
+    {
+        NotificationManager notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new Notification(R.drawable.icon, context.getString(R.string.notify_title),
+                System.currentTimeMillis());
         Intent notificationIntent = new Intent(context, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
         notification.setLatestEventInfo(context, context.getString(R.string.notify_title), message, contentIntent);
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(0, notification);
