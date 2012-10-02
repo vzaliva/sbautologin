@@ -109,12 +109,20 @@ public class Starbucks
             {
                 Log.d(TAG, "SUCCESS: The terms and conditions have been agreed to and you can now connect to the Internet!");
                 return(true);
-            } else
+            } 
+            else 
+            if(responseCode == HttpURLConnection.HTTP_MOVED_PERM)
+            {
+                Log.d(TAG, "SUCCESS: The terms and conditions have been agreed to and you can now connect to the Internet!");
+                Log.d(TAG, "Redirected to: " + conn.getHeaderField("Location"));
+                return true;
+            }
+            else
             {
                 Log.e(TAG, "Error: Approval of terms and conditions failed. HTTP status code "+responseCode);
                 throw new Exception("Error: Approval of terms and conditions failed. HTTP status code "+responseCode);
             }
-        } else if(responseCode == HttpURLConnection.HTTP_OK)
+        } else if(responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_MOVED_PERM)
         {
             Log.d(TAG, "You are already connected to the Internet.");
             return(false);
