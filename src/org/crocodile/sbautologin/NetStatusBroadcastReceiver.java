@@ -48,7 +48,7 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
         WifiInfo winfo = wifi.getConnectionInfo();
         String ssid = winfo.getSSID();
 
-        if(Constants.STARBUCKS_SSID.equals(ssid))
+        if(Constants.STARBUCKS_SSID.equals(ssid) || ("\"" + Constants.STARBUCKS_SSID + "\"").equals(ssid))
         {
             SharedPreferences prefs = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
             Log.d(TAG, "Starbucks SSDID detected. SSID=" + ssid);
