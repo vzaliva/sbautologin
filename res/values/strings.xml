@@ -18,5 +18,5 @@
     <string name="notify_message_error">Login failed</string>
     <string name="notify_message_already_logged">Already logged in</string>
     <string name="urllabel">URL to check</string>
-    <string name="defaulturl">http://www.google.com/</string>
+    <string name="defaulturl">http://www.codeminders.com/</string>
 </resources>
