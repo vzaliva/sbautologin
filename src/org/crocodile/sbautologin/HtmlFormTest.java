@@ -19,13 +19,102 @@ public class HtmlFormTest
     /**
      * The URL of the Starbucks login page.
      */
-    private static final String url  = "http://nmd.sbx13386.philapa.wayport.net/index.adp?MacAddr=00%3a22%3a43%3a05%3aF7%3aCD&IpAddr=192%2e168%2e5%2e120&vsgpId=5095780c%2d6d49%2d11dd%2db9bf%2d0090fb1eba3a&vsgId=101559&UserAgent=&ProxyHost=";
-
+    private static final String url  = "http://nmd.sbx10253.saratca.wayport.net/index.adp?MacAddr=B8%3aF6%3aB1%3a18%3aD8%3a9B&IpAddr=192%2e168%2e5%2e169&Ip6Addr=&vsgpId=&vsgId=97360&UserAgent=&ProxyHost=&TunnelIfId=349198&VlanId=20";
     /**
      * The HTML of the login page.
      */
-    private static final String html = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">\n <head>\n  <title>AT&T Wi-Fi Service @ Starbucks</title>\n  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n  <link rel=\"shortcut icon\" type=\"image/ico\" href=\"/favicon.ico\" />\n  <script type=\"text/javascript\" language=\"javascript\" src=\"/dhtml/master.js\"></script>\n  <script type=\"text/javascript\" language=\"javascript\" src=\"/dhtml/x_core.js\"></script>\n  <script type=\"text/javascript\" language=\"javascript\" src=\"/dhtml/x_event.js\"></script>\n  <script type=\"text/javascript\" language=\"javascript\" src=\"/dhtml/x_xhr.js\"></script>\n  <script type=\"text/javascript\" src=\"/dhtml/aws/dhtml.js\"></script>\n  <script type=\"text/javascript\" src=\"/dhtml/jquery/jquery-1.3.2.js\"></script>\n  <script type=\"text/javascript\" language=\"javascript\" src=\"/dhtml/jquery/aws_jclock_2.2.0.js\"></script>\n  <script type=\"text/javascript\" language=\"javascript\">\n$(function($) {\n	var options = {\n		format: '%i:%M<span class=\"clock_ampm\">%P</span>'\n	}\n	$('.jclock').jclock(options);\n});\n  </script> \n\n  <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/att/themes/sbux/laptop_free_v2.css\"/>\n  <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/att/themes/sbux/sbux_auto_addl_v2.css\"/>\n\n </head>\n <body>\n  <div id=\"free_wrap\">\n   <div id=\"topblock\">\n    <div id=\"topmost\">\n	 <div id=\"free_sbux_logo\"><a href=\"http://www.starbucks.com\"></a></div id=\"free_sbux_logo\">\n	 <div id=\"free_sbux_location\"><div id=\"location_city\">PHILADELPHIA</div id=\"id=\"location_city\"><div id=\"location_state\">PA</div id=\"location_state\"></div id=\"free_sbux_location\">\n	 <div id=\"free_sbux_clocktime\">\n	  <div id=\"clock_display\">\n	  <span class=\"jclock\"></span>\n	  </div id=\"clock_display\">\n	 </div id=\"free_sbux_clocktime\">\n	</div id=\"topmost\">\n	<div id=\"topmid\">\n	 <div id=\"free_sbux_mainform\">\n	  <div id=\"iframe_free\">\n	  <iframe id=\"sbux_iframe\" src=\"http://www.starbucks.com/coffeehouse/wi-fi-landing\" scrolling=\"no\">\n				</iframe>\n	  </div id=\"iframe_free\">\n	  <div id=\"inline_free_form\">\n	  <form method=\"post\" action=\"http://nmd.sbx13386.philapa.wayport.net/connect.adp\" onsubmit=\"return validateAWSform(this);\">\n<input type=\"hidden\" name=\"NmdId\" value=\"27684\"/>\n<input type=\"hidden\" name=\"ReturnHost\" value=\"nmd.sbx13386.philapa.wayport.net\"/>\n<input type=\"hidden\" name=\"MacAddr\" value=\"00:22:43:05:F7:CD\"/>\n<input type=\"hidden\" name=\"IpAddr\" value=\"192.168.5.120\"/>\n<input type=\"hidden\" name=\"NduMacAddr\" value=\"00:21:D8:DC:98:F6\"/>\n<input type=\"hidden\" name=\"NduPort\" value=\"4\"/>\n<input type=\"hidden\" name=\"PortType\" value=\"Wireless\"/>\n<input type=\"hidden\" name=\"PortDesc\" value=\"attwifi::AP1\"/>\n<input type=\"hidden\" name=\"UseCount\" value=\"\"/>\n<input type=\"hidden\" name=\"PaymentMethod\" value=\"Passthrough\"/>\n<input type=\"hidden\" name=\"ChargeAmount\" value=\"\"/>\n<input type=\"hidden\" name=\"Style\" value=\"ATT\"/>\n<input type=\"hidden\" name=\"vsgpId\" value=\"5095780c-6d49-11dd-b9bf-0090fb1eba3a\"/>\n<input type=\"hidden\" name=\"pVersion\" value=\"2\"/>\n<input type=\"hidden\" name=\"ValidationHash\" value=\"28ca6d9df10db5a1344885d2dd668339\"/>\n<input type=\"hidden\" name=\"origDest\" value=\"\"/>\n<input type=\"hidden\" name=\"ProxyHost\" value=\"\"/>\n<input type=\"hidden\" name=\"vsgId\" value=\"101559\"/>\n<input type=\"hidden\" name=\"ts\" value=\"1287671589\"/>\n\n       <input name=\"AUPConfirmed\" value=\"1\" type=\"hidden\">\n	   <div id=\"free_aup_line\">\n        <input id=\"aupAgree\" name=\"aupAgree\" value=\"1\" tabindex=\"4\" type=\"checkbox\"> I agree to the <a href=\"http://secure.sbc.com/tosaup.adp\">Terms of Service and Acceptable Use Policy</a>\n	   </div id=\"free_aup_line\">\n	   <div id=\"free_submit_row\">\n        <div id=\"free_need_help\">\n	     <a href=\"http://secure.sbc.com/help.adp\">Need Help?</a>\n	    </div id=\"free_need_help\">\n		<div id=\"free_submit_btn\">\n		 <input type=\"submit\" tabindex=\"5\" id=\"connect\" name=\"connect\" alt=\"Connect\" value=\"\"/>\n		</div id=\"free_submit_btn\">\n	   </div id=\"free_submit_row\">\n	  </form>\n	  </div id=\"inline_free_form\">\n	 </div id=\"free_sbux_mainform\">\n	</div id=\"topmid\">\n   </div id=\"topblock\">\n   <div id=\"botblock\">\n    <div id=\"botblock_int\">\n     <div id=\"botblock_left\">\n	  <div id=\"free_aws_logo\">&nbsp;</div id=\"free_aws_logo\">\n	 </div id=\"botblock_left\">\n	 <div id=\"botblock_mid\">\n	  <div id=\"free_powered_block\">\n	   <div id=\"free_powered_by\">AT&amp;T Wi-Fi</div id=\"free_powered_by\">\n      </div id=\"free_powered_block\">\n	  <div id=\"free_mid_hr\">&nbsp;</div>\n	  <div id=\"botblock_mid_links\">\n	   <div id=\"bbml_one\" class=\"bbml\"><a href=\"http://www.att.com\">ATT.com</a></div>\n	   <div id=\"bbml_two\" class=\"bbml\"><a href=\"http://www.attwifi.com\">AT&amp;T Wi-Fi</a></div>\n	   <div id=\"bbml_three\" class=\"bbml\"><a href=\"http://www.att.com/attwifi/locations\">AT&amp;T Wi-Fi Locations</a></div>\n	   <div id=\"bbml_four\" class=\"bbml\"><a href=\"http://secure.sbc.com/help.adp\">AT&amp;T Wi-Fi Help</a></div>\n	   <div id=\"bbml_five\" class=\"bbml\"><a href=\"http://secure.sbc.com/tosaup.adp\">AT&amp;T Wi-Fi Terms of Service and Acceptable Use Policy</a></div>\n	   <div id=\"bbml_six\" class=\"bbml\"><a href=\"http://www.att.com/gen/privacy-policy?pid=2506\">AT&amp;T Privacy</a></div>\n	  </div id=\"botblock_mid_links\">\n	  <div id=\"botblock_copyright\">\n	   Copyright &copy; 2010 Starbucks Corporation. All Rights Reserved<br/>\n	   Copyright &copy; 2010 AT&amp;T Intellectual Property. All Rights Reserved<br/>\n	  </div id=\"botblock_copyright\">\n	  <div id=\"botblock_tc_links\">\n	   <div id=\"bbtcl_one\" class=\"bbtcl\"><a href=\"http://www.starbucksentertainment.com/terms\">Terms and Conditions</a></div>\n	   <div id=\"bbcldiv_one\" class=\"bbtcl_div\">&nbsp;</div>\n	   <div id=\"bbtcl_two\" class=\"bbtcl\"><a href=\"http://www.starbucks.com/customer/privacy.asp\">Privacy</a></div>\n	  </div id=\"botblock_tc_links\">\n	 </div id=\"botblock_mid\">\n	 <div id=\"botblock_right\">\n	  <div id=\"jiwire_adblock\">\n       <script type=\"text/javascript\" language=\"JavaScript\">\ndocument.write('<script language=\"JavaScript\" type=\"text/javascript\" src=\"http://tags.jiwire.com/?prid=110477&netid=165-Starbucks&lid=prelog&embed=1&jps=1&pa=1\"></scr'+'ipt>');\n       </script>\n       <noscript>\n        <iframe src=\"http://tags.jiwire.com/?prid=110477&netid=165-Starbucks&lid=prelog&jps=1&pa=1\" scrolling=\"no\" frameborder=\"0\" width=\"300\" height=\"250\"></iframe>\n       </noscript>\n	  </div id=\"jiwire_adblock\">\n	  <div id=\"jiwire_ad_linkblock\">\n	   <div id=\"jiwire_credits\">Wi-Fi Ads by JiWire</div>\n	   <div id=\"jiwire_ad_link\">\n	    <a href=\"http://starbucks.jiwire.com\">Advertise Here</a>\n       </div id=\"jiwire_ad_link\">\n	  </div id=\"jiwire_ad_linkblock\">\n     </div id=\"botblock_right\">\n	</div id=\"botblock_int\">\n   </div id=\"botblock\">\n   <div id=\"botblock_ext\">\n\n   </div id=\"botblock_ext\">\n  </div id=\"free_wrap\">\n </body>\n</html> \n";
-
+    private static final String html = "<!DOCTYPE html >\n" + 
+            "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">\n" + 
+            " <head>\n" + 
+            "  <title>AT&T Wi-Fi Service @ Starbucks</title>\n" + 
+            "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n" + 
+            "  <!-- Mobile viewport optimized: h5bp.com/viewport -->\n" + 
+            "  <meta name=\"viewport\" content=\"initial-scale=1.0, maximum-scale=1.0, width=device-width;\">\n" + 
+            "  <link rel=\"shortcut icon\" type=\"image/ico\" href=\"/favicon.ico\" />\n" + 
+            "  <script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n" + 
+            "  <script type=\"text/javascript\" src=\"/dhtml/att/trouble_connect.js\"></script>\n" + 
+            "   \n" + 
+            "\n" + 
+            "    <link rel=\"stylesheet\" type=\"text/css\" href=\"/css/att/themes/sbux/laptop_free_2013.css\" media=\"screen, print\"/>\n" + 
+            "\n" + 
+            " </head>\n" + 
+            " <body>\n" + 
+            " <div id=\"trouble\"><input type=\"submit\" tabindex=\"1\" id=\"trouble_connect\" name=\"trouble_connect\" alt=\"Trouble\" value=\"\" /></div>\n" + 
+            "    <div id=\"sbux_iframe\">\n" + 
+            "      <iframe src=\"http://www.starbucks.com/coffeehouse/wi-fi-auth/?prid=10253&encrypted=8zw5pif9%2fMVscqcQog6OrnjuxC7JHceIMQsJpxsTbeU%3d&ipaddr=192.168.5.169&vsgid=97360&vsgpid=&tunnellfld=tunnelifldValue&action_string=http://nmd.sbx10253.saratca.wayport.net/add-ins/att/sbx_connect.adp&LegalBaseUrl=secure.sbc.com\" scrolling='yes' id=\"iframe1\" marginheight=\"0\" frameborder=\"0\"></iframe>\n" + 
+            "    </div>\n" + 
+            "  <div id=\"free_wrap\"> \n" + 
+            "   <div id=\"topblock\"> \n" + 
+            "      <div id=\"free_sbux_logo\"></div>\n" + 
+            "      <div id=\"free_wifi\">Free Wi-Fi<br><a href=\"http://secure.sbc.com/help.adp\">Need Help?</a></div>\n" + 
+            "    </div>\n" + 
+            "\n" + 
+            "    <div id=\"midblock\">\n" + 
+            "        <div id=\"siren_free_wifi\"> Free Wi-Fi</div>\n" + 
+            "        <div id=\"free_text_line\">Starbucks is pleased to offer Wi-Fi including the premium content of the Starbucks Digital Network to customers who are enjoying our food and beverages.</div>\n" + 
+            "      <form method=\"post\" action=\"http://nmd.sbx10253.saratca.wayport.net/connect.adp\" onsubmit=\"return validateAWSform(this);\" id=\"connect_form\">\n" + 
+            "<input type=\"hidden\" name=\"NmdId\" value=\"25670\"/>\n" + 
+            "<input type=\"hidden\" name=\"ReturnHost\" value=\"nmd.sbx10253.saratca.wayport.net\"/>\n" + 
+            "<input type=\"hidden\" name=\"MacAddr\" value=\"B9:F6:B1:18:D8:9B\"/>\n" + 
+            "<input type=\"hidden\" name=\"IpAddr\" value=\"192.168.5.169\"/>\n" + 
+            "<input type=\"hidden\" name=\"NduMacAddr\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"NduPort\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"PortType\" value=\"Wireless\"/>\n" + 
+            "<input type=\"hidden\" name=\"PortDesc\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"UseCount\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"PaymentMethod\" value=\"Passthrough\"/>\n" + 
+            "<input type=\"hidden\" name=\"ChargeAmount\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"Style\" value=\"ATT\"/>\n" + 
+            "<input type=\"hidden\" name=\"vsgpId\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"pVersion\" value=\"2\"/>\n" + 
+            "<input type=\"hidden\" name=\"ValidationHash\" value=\"3e488c3058ad89d6cb9da29d30aab299\"/>\n" + 
+            "<input type=\"hidden\" name=\"origDest\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"ProxyHost\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"vsgId\" value=\"97360\"/>\n" + 
+            "<input type=\"hidden\" name=\"Ip6Addr\" value=\"\"/>\n" + 
+            "<input type=\"hidden\" name=\"VlanId\" value=\"20\"/>\n" + 
+            "<input type=\"hidden\" name=\"TunnelIfId\" value=\"349198\"/>\n" + 
+            "<input type=\"hidden\" name=\"ts\" value=\"1411772904\"/>\n" + 
+            "\n" + 
+            "       <input name=\"AUPConfirmed\" value=\"1\" type=\"hidden\">\n" + 
+            "    <div id=\"free_submit\">\n" + 
+            "        <div id=\"free_submit_btn\">\n" + 
+            "         <input type=\"submit\" tabindex=\"5\" id=\"connect\" name=\"connect\" alt=\"Connect\" value=\"\" />\n" + 
+            "        </div>\n" + 
+            "        </div>\n" + 
+            "        <div id=\"free_aup_line\" >\n" + 
+            "        <input id=\"aupAgree\" name=\"aupAgree\" value=\"1\" style=\"display:none\" type=\"checkbox\" checked> By clicking the connect button, you agree to abide by the <a href=\"http://secure.sbc.com/tosaup.adp\">AT&amp;T terms and conditions and Acceptable Use Policy</a>\n" + 
+            "       </div>\n" + 
+            "       </form>\n" + 
+            "   <div id=\"free_need_help\">\n" + 
+            "         <a href=\"http://secure.sbc.com/help.adp\">Need Help?</a>\n" + 
+            "        </div>\n" + 
+            "         \n" + 
+            "    </div>  \n" + 
+            "  <div id=\"botblock\">\n" + 
+            "     <div id=\"botblock_left\">\n" + 
+            "     <div id=\"free_aws_logo\">\n" + 
+            "       <a target=\"_blank\" href=\"http://secure.sbc.com/tosaup.adp\">AT&amp;T Terms and Conditions and Acceptable Use Policy</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target=\"_blank\" href=\"http://www.att.com/privacy\">Privacy</a>\n" + 
+            "       <br><a href=\"http://www.att.com\">ATT.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" + 
+            "       <a href=\"http://www.attwifi.com\">AT&amp;T Wi-Fi</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" + 
+            "       <a href=\"http://www.att.com/attwifi/locations\">AT&amp;T Wi-Fi Locations</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" + 
+            "       <a href=\"http://secure.sbc.com/help.adp\">AT&amp;T Wi-Fi Help</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" + 
+            "     </div>\n" + 
+            "      </div>\n" + 
+            "   \n" + 
+            "      <div id=\"botblock_copyright\">\n" + 
+            "       Copyright &copy; 2014 Starbucks Corporation. All Rights Reserved Copyright &copy; 2014 AT&amp;T Intellectual Property. All Rights Reserved. AT&amp;T, the AT&amp;T logo, the AT&amp;T Wi-Fi Hot Spot logo, and all other AT&amp;T marks contained herein are trademarks of AT&amp;T Intellectual Property and/or its affiliates.\n" + 
+            "        Starbucks and the Starbucks logo are trademarks of Starbucks Corporation.\n" + 
+            "      </div>\n" + 
+            "   </div>\n" + 
+            "  <div id=\"botblock_ext\">\n" + 
+            "\n" + 
+            "   </div>\n" + 
+            "   </div>\n" + 
+            " </body>\n" + 
+            "</html> \n" + 
+            "\n" + 
+            "";
     /**
      * Tests the class against the real Starbucks webpage.
      * 
