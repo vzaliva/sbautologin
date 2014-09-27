@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
+import android.os.*;
+
 import org.crocodile.sbautologin.db.DBAccesser;
 import org.crocodile.sbautologin.model.HistoryItem;
 
@@ -24,10 +23,10 @@ import android.widget.RelativeLayout.LayoutParams;
 
 public class MainActivity extends Activity
 {
-    private static final String TAG = "SbAutoLogin";
-    private boolean update = true;
-    private Object monitor = new Object();
-    private boolean needRetry = false;
+    private static final String TAG       = "SbAutoLogin";
+    private boolean             update    = true;
+    private Object              monitor   = new Object();
+    private boolean             needRetry = false;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -56,7 +55,7 @@ public class MainActivity extends Activity
 
     private void clearHistory()
     {
-        Log.d(TAG,"Clearing history");
+        Log.d(TAG, "Clearing history");
         DBAccesser db = new DBAccesser(MainActivity.this);
         db.removeHistoryItems();
         synchronized(monitor)
@@ -69,6 +68,12 @@ public class MainActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        if(android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         setContentView(R.layout.main);
 
@@ -85,7 +90,7 @@ public class MainActivity extends Activity
             }
         });
 
-       // addTestData();
+        // addTestData();
     }
 
     @Override
@@ -120,11 +125,12 @@ public class MainActivity extends Activity
                 while(true)
                 {
                     int newMaxId = db.getMaxId();
-                    if(maxId < newMaxId || newMaxId==0)
+                    if(maxId < newMaxId || newMaxId == 0)
                     {
                         handler.sendEmptyMessage(0);
                         maxId = newMaxId;
-                    } else if (needRetry) {
+                    } else if(needRetry)
+                    {
                         needRetry = false;
                         handler.sendEmptyMessage(0);
                     }
@@ -157,9 +163,11 @@ public class MainActivity extends Activity
     {
         DBAccesser db = new DBAccesser(this);
         ArrayList<HistoryItem> hist;
-        try {
+        try
+        {
             hist = db.getHistoryItems(Constants.HIST_LEN);
-        } catch (Exception e) {
+        } catch(Exception e)
+        {
             needRetry = true;
             return;
         }
