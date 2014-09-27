@@ -98,6 +98,11 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
         String s = settings.getString(Constants.PREF_KEY_URL, default_url);
         if(s == null || s.equals(default_url))
             return s;
+        
+        // Google is no longer blocked, replace it with default URL
+        if(s.equalsIgnoreCase("http://www.google.com/"))
+            return default_url;
+
         s = s.trim();
         try
         {
