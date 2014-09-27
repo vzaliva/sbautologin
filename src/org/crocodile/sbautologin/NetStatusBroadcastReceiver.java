@@ -13,7 +13,6 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
-import android.widget.ToggleButton;
 
 import org.crocodile.sbautologin.db.*;
 import org.crocodile.sbautologin.model.HistoryItem;
