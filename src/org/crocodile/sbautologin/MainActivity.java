@@ -79,6 +79,7 @@ public class MainActivity extends Activity
 
         ToggleButton activeToggle = (ToggleButton) findViewById(R.id.active);
         SharedPreferences settings = getSharedPreferences(Constants.PREFS_NAME, 0);
+        
         activeToggle.setChecked(settings.getBoolean(Constants.PREF_KEY_ACTIVE, true));
         activeToggle.setOnClickListener(new OnClickListener() {
             public void onClick(View buttonView)

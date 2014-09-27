@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+import android.widget.ToggleButton;
 
 import org.crocodile.sbautologin.db.*;
 import org.crocodile.sbautologin.model.HistoryItem;
@@ -95,14 +96,15 @@ public class NetStatusBroadcastReceiver extends BroadcastReceiver
     private String getTestURL(Context context, SharedPreferences settings)
     {
         String default_url = context.getString(R.string.defaulturl);
-        String s = settings.getString(Constants.PREF_KEY_URL, default_url);
-        if(s == null || s.equals(default_url))
-            return s;
-        
+        String s = settings.getString(Constants.PREF_KEY_URL, default_url);        
         // Google is no longer blocked, replace it with default URL
-        if(s.equalsIgnoreCase("http://www.google.com/"))
-            return default_url;
-
+        if(s == null || "http://www.google.com/".equalsIgnoreCase(s))
+        {
+            s = default_url;
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(Constants.PREF_KEY_URL, s);
+            editor.commit();
+        }
         s = s.trim();
         try
         {
