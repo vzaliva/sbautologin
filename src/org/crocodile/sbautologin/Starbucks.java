@@ -96,7 +96,9 @@ public class Starbucks
             out.flush();
 
             // send request
-            conn.getResponseCode();
+            responseCode = conn.getResponseCode();
+            Log.d(TAG, "Form sbumitted. HTTP status code "+responseCode);
+
             conn.disconnect();
 
             // try to connect to the Internet again to see if it worked
