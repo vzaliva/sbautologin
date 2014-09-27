@@ -125,31 +125,36 @@ public class HtmlFormTest
     {
         HtmlForm htmlForm = new HtmlForm(new URL(url), html);
 
-        Assert.assertEquals("http://nmd.sbx13386.philapa.wayport.net/connect.adp", htmlForm.actionUrl.toExternalForm());
+        Assert.assertEquals("http://nmd.sbx10253.saratca.wayport.net/connect.adp", htmlForm.actionUrl.toExternalForm());
         Assert.assertEquals("POST", htmlForm.method);
-
+        
         Map<String, String> params = new HashMap<String, String>();
-        params.put("NmdId", "27684");
-        params.put("ReturnHost", "nmd.sbx13386.philapa.wayport.net");
-        params.put("MacAddr", "00:22:43:05:F7:CD");
-        params.put("IpAddr", "192.168.5.120");
-        params.put("NduMacAddr", "00:21:D8:DC:98:F6");
-        params.put("NduPort", "4");
+        
+        params.put("NmdId", "25670");
+        params.put("ReturnHost", "nmd.sbx10253.saratca.wayport.net");
+        params.put("MacAddr", "B9:F6:B1:18:D8:9B");
+        params.put("IpAddr", "192.168.5.169");
+        params.put("NduMacAddr", "");
+        params.put("NduPort", "");
         params.put("PortType", "Wireless");
-        params.put("PortDesc", "attwifi::AP1");
+        params.put("PortDesc", "");
         params.put("UseCount", "");
         params.put("PaymentMethod", "Passthrough");
         params.put("ChargeAmount", "");
         params.put("Style", "ATT");
-        params.put("vsgpId", "5095780c-6d49-11dd-b9bf-0090fb1eba3a");
+        params.put("vsgpId", "");
         params.put("pVersion", "2");
-        params.put("ValidationHash", "28ca6d9df10db5a1344885d2dd668339");
+        params.put("ValidationHash", "3e488c3058ad89d6cb9da29d30aab299");
         params.put("origDest", "");
         params.put("ProxyHost", "");
-        params.put("vsgId", "101559");
-        params.put("ts", "1287671589");
+        params.put("vsgId", "97360");
+        params.put("Ip6Addr", "");
+        params.put("VlanId", "20");
+        params.put("TunnelIfId", "349198");
+        params.put("ts", "1411772904");
         params.put("AUPConfirmed", "1");
         params.put("aupAgree", "1");
+        
         Assert.assertEquals(params, htmlForm.parameters);
     }
 
